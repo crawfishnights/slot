@@ -103,7 +103,9 @@ export const useStore = create<StoreState>()(
         set({ credits: STARTING_CREDITS, inventory: [], recentPulls: [] }),
     }),
     {
-      name: "crate-market-store",
+      // v2: bumped after the item/crate data model changed shape, so any
+      // previously cached v1 items (old field names) don't get rendered.
+      name: "slotcase-store-v2",
       skipHydration: true,
     }
   )

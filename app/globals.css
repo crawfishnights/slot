@@ -1,16 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0a0b0f;
-  --surface: #13141b;
-  --surface-2: #1a1c25;
-  --border: #262835;
-  --foreground: #f4f5f7;
-  --muted: #9497a8;
-  --accent: #7c5cff;
-  --accent-2: #ff5c9a;
-  --credit: #ffd166;
-  --positive: #4ade80;
+  --background: #131211;
+  --surface: #1b1917;
+  --surface-2: #232019;
+  --border: #35312a;
+  --border-soft: #2a2721;
+  --foreground: #f4efe6;
+  --muted: #a89f8f;
+  --muted-2: #766f61;
+  --cream: #f4efe6;
+  --positive: #8bb98a;
+  --credit: #d9a441;
 }
 
 @theme inline {
@@ -18,12 +19,13 @@
   --color-surface: var(--surface);
   --color-surface-2: var(--surface-2);
   --color-border: var(--border);
+  --color-border-soft: var(--border-soft);
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
-  --color-accent: var(--accent);
-  --color-accent-2: var(--accent-2);
-  --color-credit: var(--credit);
+  --color-muted-2: var(--muted-2);
+  --color-cream: var(--cream);
   --color-positive: var(--positive);
+  --color-credit: var(--credit);
   --font-sans: var(--font-body);
   --font-display: var(--font-display);
 }
@@ -33,16 +35,14 @@ html {
 }
 
 body {
-  background: radial-gradient(120% 140% at 15% -10%, #1c1830 0%, transparent 55%),
-    radial-gradient(120% 120% at 100% 0%, #14202f 0%, transparent 50%),
-    var(--background);
+  background: var(--background);
   color: var(--foreground);
   font-family: var(--font-body), Arial, Helvetica, sans-serif;
   min-height: 100dvh;
 }
 
 * {
-  scrollbar-color: #34364a var(--surface);
+  scrollbar-color: #3d382f var(--surface);
 }
 
 ::-webkit-scrollbar {
@@ -53,18 +53,17 @@ body {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #34364a;
+  background: #3d382f;
   border-radius: 8px;
 }
 
 .font-display {
-  font-family: var(--font-display), var(--font-body), sans-serif;
+  font-family: var(--font-display), var(--font-body), serif;
 }
 
-.glass-card {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015));
+.paper-card {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.008));
   border: 1px solid var(--border);
-  backdrop-filter: blur(6px);
 }
 
 .no-scrollbar::-webkit-scrollbar {
@@ -75,39 +74,64 @@ body {
   scrollbar-width: none;
 }
 
-@keyframes shimmer {
-  0% {
-    background-position: -400px 0;
-  }
-  100% {
-    background-position: 400px 0;
-  }
+.grain {
+  position: relative;
+  isolation: isolate;
+}
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
+@keyframes shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
 .shimmer {
   background: linear-gradient(
     100deg,
     transparent 30%,
-    rgba(255, 255, 255, 0.12) 45%,
-    rgba(255, 255, 255, 0.12) 55%,
+    rgba(255, 255, 255, 0.1) 45%,
+    rgba(255, 255, 255, 0.1) 55%,
     transparent 70%
   );
   background-size: 400px 100%;
   animation: shimmer 2.6s infinite;
 }
 
-@keyframes float-glow {
+@keyframes float-slow {
   0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-6px); }
+  50% { transform: translateY(-8px); }
 }
-.float-glow {
-  animation: float-glow 4.5s ease-in-out infinite;
+.float-slow {
+  animation: float-slow 5.5s ease-in-out infinite;
 }
 
 @keyframes pulse-ring {
-  0% { box-shadow: 0 0 0 0 rgba(124, 92, 255, 0.5); }
-  100% { box-shadow: 0 0 0 14px rgba(124, 92, 255, 0); }
+  0% { box-shadow: 0 0 0 0 rgba(244, 239, 230, 0.35); }
+  100% { box-shadow: 0 0 0 16px rgba(244, 239, 230, 0); }
 }
 .pulse-ring {
   animation: pulse-ring 1.8s ease-out infinite;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.animate-fade-in {
+  animation: fade-in 0.4s ease both;
+}
+
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-rise-in {
+  animation: rise-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
