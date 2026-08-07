@@ -32,7 +32,7 @@ export function RecentPulls() {
               }}
             >
               <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-surface-2/70">
-                <ProductArt subtype={pull.item.subtype} brand={brand} flavorOrEdition={pull.item.flavorOrEdition} className="h-full w-full p-0.5" />
+                <ProductArt renderShape={pull.item.renderShape} brand={brand} flavorOrEdition={pull.item.flavorOrEdition} className="h-full w-full p-0.5" />
               </div>
               <div className="min-w-0">
                 <div className="truncate text-[12px] font-medium">{pull.item.name}</div>

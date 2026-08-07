@@ -1,22 +1,25 @@
 "use client";
 
 import { ReactNode } from "react";
+import Link from "next/link";
 import { Item } from "@/lib/types";
 import { ProductArt } from "@/components/art/ProductArt";
 import { getBrand } from "@/lib/data/brands";
 import { CategoryBadge } from "@/components/CategoryBadge";
 import { ChaseTierBadge } from "@/components/ChaseTierBadge";
+import { MarketTierBadge } from "@/components/MarketTierBadge";
 import { formatCredits, formatUsd } from "@/lib/format";
 
 interface ProductCardProps {
   item: Item;
-  crateName?: string;
+  sourceLabel?: string;
   showOdds?: boolean;
+  hideChaseTier?: boolean;
   footer?: ReactNode;
   quantity?: number;
 }
 
-export function ProductCard({ item, crateName, showOdds, footer, quantity }: ProductCardProps) {
+export function ProductCard({ item, sourceLabel, showOdds, hideChaseTier, footer, quantity }: ProductCardProps) {
   const brand = getBrand(item.brandId);
   const isStandout = item.chaseTier === "headliner" || item.chaseTier === "major_chase";
   const isHeadliner = item.chaseTier === "headliner";
@@ -43,14 +46,16 @@ export function ProductCard({ item, crateName, showOdds, footer, quantity }: Pro
 
       <div className="relative flex aspect-[4/5] items-center justify-center bg-surface-2/70 p-3">
         <ProductArt
-          subtype={item.subtype}
+          renderShape={item.renderShape}
           brand={brand}
           flavorOrEdition={item.flavorOrEdition}
           className="h-full w-full drop-shadow-xl"
         />
-        <div className="absolute left-2 top-2">
-          <ChaseTierBadge tier={item.chaseTier} />
-        </div>
+        {!hideChaseTier && (
+          <div className="absolute left-2 top-2">
+            <ChaseTierBadge tier={item.chaseTier} />
+          </div>
+        )}
         {showOdds && (
           <span className="absolute right-2 top-2 rounded-full bg-black/55 px-2 py-0.5 text-[10px] font-semibold text-cream backdrop-blur">
             {item.odds}%
@@ -68,10 +73,17 @@ export function ProductCard({ item, crateName, showOdds, footer, quantity }: Pro
           <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: brand.colors[0] }}>
             {brand.name}
           </span>
-          <CategoryBadge category={item.category} />
+          <div className="flex items-center gap-1">
+            <MarketTierBadge tier={item.marketTier} />
+            <CategoryBadge category={item.category} />
+          </div>
         </div>
-        <h4 className="text-sm font-semibold leading-snug">{item.name}</h4>
-        {crateName && <p className="text-[11px] text-muted">From {crateName}</p>}
+        <h4 className="text-sm font-semibold leading-snug">
+          <Link href={`/marketplace/${item.id}`} className="hover:underline">
+            {item.name}
+          </Link>
+        </h4>
+        {sourceLabel && <p className="text-[11px] text-muted">{sourceLabel}</p>}
 
         <div className="mt-1.5 flex items-center justify-between">
           <div>

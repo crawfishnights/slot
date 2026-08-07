@@ -99,7 +99,7 @@ export function Roulette({ items, spinToken, onFinish }: RouletteProps) {
                   }}
                 >
                   <ProductArt
-                    subtype={entry.item.subtype}
+                    renderShape={entry.item.renderShape}
                     brand={brand}
                     flavorOrEdition={entry.item.flavorOrEdition}
                     className="h-32 w-full"
@@ -132,7 +132,7 @@ function IdleStrip({ items }: { items: Item[] }) {
             className="flex shrink-0 flex-col items-center justify-center rounded-2xl border border-border-soft bg-surface p-3"
             style={{ width: CARD_WIDTH, height: 224 }}
           >
-            <ProductArt subtype={item.subtype} brand={brand} flavorOrEdition={item.flavorOrEdition} className="h-32 w-full" />
+            <ProductArt renderShape={item.renderShape} brand={brand} flavorOrEdition={item.flavorOrEdition} className="h-32 w-full" />
           </div>
         );
       })}

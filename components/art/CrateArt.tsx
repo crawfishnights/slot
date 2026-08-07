@@ -101,7 +101,7 @@ function ProductArtInline({ item }: { item: ReturnType<typeof sortedByValueDesc>
   const brand = getBrand(item.brandId);
   return (
     <ProductArt
-      subtype={item.subtype}
+      renderShape={item.renderShape}
       brand={brand}
       flavorOrEdition={item.flavorOrEdition}
     />

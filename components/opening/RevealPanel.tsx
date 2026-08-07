@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { Item } from "@/lib/types";
 import { getBrand } from "@/lib/data/brands";
 import { ProductArt } from "@/components/art/ProductArt";
@@ -41,7 +42,7 @@ export function RevealPanel({ item, onKeep, onSell, onOpenAgain, canAfford }: Re
           style={{ background: `radial-gradient(circle, ${brand.colors[0]}33, transparent 70%)` }}
         />
         <ProductArt
-          subtype={item.subtype}
+          renderShape={item.renderShape}
           brand={brand}
           flavorOrEdition={item.flavorOrEdition}
           className="relative h-full w-full drop-shadow-2xl"
@@ -92,13 +93,21 @@ export function RevealPanel({ item, onKeep, onSell, onOpenAgain, canAfford }: Re
             Sell for {formatCredits(item.buybackValue)}
           </button>
         </div>
-        <button
-          onClick={onOpenAgain}
-          disabled={!canAfford}
-          className="w-full rounded-full border border-border-soft py-3 text-sm font-medium text-foreground transition-colors hover:bg-surface disabled:cursor-not-allowed disabled:opacity-40"
-        >
-          Keep &amp; Open Again
-        </button>
+        <div className="flex w-full gap-2.5">
+          <button
+            onClick={onOpenAgain}
+            disabled={!canAfford}
+            className="flex-1 rounded-full border border-border-soft py-3 text-sm font-medium text-foreground transition-colors hover:bg-surface disabled:cursor-not-allowed disabled:opacity-40"
+          >
+            Keep &amp; Open Again
+          </button>
+          <Link
+            href={`/marketplace/${item.id}`}
+            className="flex flex-1 items-center justify-center rounded-full border border-border-soft py-3 text-sm font-medium text-foreground transition-colors hover:bg-surface"
+          >
+            View Market Item
+          </Link>
+        </div>
       </div>
     </motion.div>
   );

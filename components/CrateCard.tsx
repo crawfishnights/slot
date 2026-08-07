@@ -23,7 +23,7 @@ export function CrateCard({ crate, size = "standard" }: { crate: Crate; size?: "
 
   return (
     <Link
-      href={`/crates/${crate.slug}`}
+      href={`/boxes/${crate.slug}`}
       className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-border-soft bg-surface shadow-[0_1px_0_rgba(255,255,255,0.03)_inset,0_18px_36px_-24px_rgba(0,0,0,0.7)] transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--crate-accent)] hover:shadow-[0_1px_0_rgba(255,255,255,0.04)_inset,0_24px_44px_-20px_rgba(0,0,0,0.8)]"
       style={{ "--crate-accent": `${crate.palette.primary}55` } as CSSProperties}
     >
@@ -84,7 +84,7 @@ export function CrateCard({ crate, size = "standard" }: { crate: Crate; size?: "
                   title={`${item.name} · ${formatCredits(item.marketValue)} cr`}
                 >
                   <ProductArt
-                    subtype={item.subtype}
+                    renderShape={item.renderShape}
                     brand={brand}
                     flavorOrEdition={item.flavorOrEdition}
                     className="h-full w-full scale-[1.7] translate-y-1"
@@ -104,7 +104,7 @@ export function CrateCard({ crate, size = "standard" }: { crate: Crate; size?: "
             <div className="text-[11px] text-muted">{formatUsd(crate.price)} to open</div>
           </div>
           <span className="flex items-center gap-1.5 rounded-full bg-cream px-4 py-2 text-sm font-semibold text-background transition-transform group-hover:scale-105">
-            Open Crate
+            Open Box
             <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
               <path d="M3 7h8M8 3.5L11.5 7 8 10.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>

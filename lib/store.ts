@@ -4,11 +4,16 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { Item } from "./types";
 
+export type AcquisitionSource = "box" | "marketplace";
+
 export interface InventoryItem {
   uid: string;
   item: Item;
-  crateSlug: string;
-  crateName: string;
+  source: AcquisitionSource;
+  crateSlug?: string;
+  crateName?: string;
+  /** credits actually paid, only set for marketplace purchases */
+  acquisitionPrice?: number;
   acquiredAt: number;
 }
 
@@ -32,6 +37,7 @@ interface StoreState {
   sellPull: (pullUid: string) => void;
   sellInventoryItem: (uid: string) => void;
   sellInventoryItems: (uids: string[]) => void;
+  buyListing: (item: Item, price: number) => boolean;
   resetAccount: () => void;
 }
 
@@ -76,6 +82,7 @@ export const useStore = create<StoreState>()(
             {
               uid: pull.uid,
               item: pull.item,
+              source: "box",
               crateSlug: pull.crateSlug,
               crateName: pull.crateName,
               acquiredAt: pull.timestamp,
@@ -111,13 +118,31 @@ export const useStore = create<StoreState>()(
         }));
       },
 
+      buyListing: (item, price) => {
+        if (!get().spend(price)) return false;
+        set((s) => ({
+          inventory: [
+            {
+              uid: uid(),
+              item,
+              source: "marketplace",
+              acquisitionPrice: price,
+              acquiredAt: Date.now(),
+            },
+            ...s.inventory,
+          ],
+        }));
+        return true;
+      },
+
       resetAccount: () =>
         set({ credits: STARTING_CREDITS, inventory: [], recentPulls: [] }),
     }),
     {
-      // v2: bumped after the item/crate data model changed shape, so any
-      // previously cached v1 items (old field names) don't get rendered.
-      name: "slotcase-store-v2",
+      // v3: bumped for the marketplace-first data model (canonical products,
+      // acquisition source tracking) — any previously cached v2 items don't
+      // carry the fields this shape now expects.
+      name: "slotcase-store-v3",
       skipHydration: true,
     }
   )

@@ -47,7 +47,7 @@ export function CrateDetailView({ crate }: { crate: Crate }) {
 
   function handleOpen() {
     if (!spend(crate.price)) {
-      setNotice("Not enough credits to open this crate.");
+      setNotice("Not enough credits to open this box.");
       setTimeout(() => setNotice(null), 2200);
       return;
     }
@@ -96,7 +96,7 @@ export function CrateDetailView({ crate }: { crate: Crate }) {
                 disabled={opening || !hasHydrated}
                 className="relative flex h-14 items-center gap-2 rounded-full bg-cream px-8 text-base font-semibold text-background shadow-[0_8px_30px_-6px_rgba(244,239,230,0.3)] transition-transform hover:scale-[1.03] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
               >
-                Open Crate
+                Open Box
               </button>
             </div>
 
@@ -109,7 +109,7 @@ export function CrateDetailView({ crate }: { crate: Crate }) {
             {notice && <p className="mt-3 text-sm font-medium text-[#e2492c]">{notice}</p>}
             {!canAfford && hasHydrated && !notice && (
               <p className="mt-3 text-sm text-muted">
-                You need {formatCredits(crate.price - credits)} more credits to open this crate.
+                You need {formatCredits(crate.price - credits)} more credits to open this box.
               </p>
             )}
           </div>
@@ -129,7 +129,7 @@ export function CrateDetailView({ crate }: { crate: Crate }) {
           >
             <ChaseTierBadge tier="headliner" />
             <div className="mt-3 h-40 w-40">
-              <ProductArt subtype={head.subtype} brand={headBrand} flavorOrEdition={head.flavorOrEdition} className="h-full w-full drop-shadow-2xl" />
+              <ProductArt renderShape={head.renderShape} brand={headBrand} flavorOrEdition={head.flavorOrEdition} className="h-full w-full drop-shadow-2xl" />
             </div>
             <span className="mt-2 text-[11px] font-bold uppercase tracking-wide" style={{ color: headBrand.colors[0] }}>
               {headBrand.name}
@@ -157,7 +157,7 @@ export function CrateDetailView({ crate }: { crate: Crate }) {
                   style={{ borderColor: "rgba(226,73,44,0.28)", background: "rgba(226,73,44,0.05)" }}
                 >
                   <div className="h-20 w-20 shrink-0">
-                    <ProductArt subtype={item.subtype} brand={brand} flavorOrEdition={item.flavorOrEdition} className="h-full w-full" />
+                    <ProductArt renderShape={item.renderShape} brand={brand} flavorOrEdition={item.flavorOrEdition} className="h-full w-full" />
                   </div>
                   <div className="min-w-0">
                     <ChaseTierBadge tier="major_chase" />

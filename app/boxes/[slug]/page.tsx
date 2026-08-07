@@ -21,7 +21,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function CratePage({
+export default async function BoxPage({
   params,
 }: {
   params: Promise<{ slug: string }>;

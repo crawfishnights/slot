@@ -45,8 +45,21 @@ export function Navbar() {
             </span>
           </Link>
           <nav className="hidden items-center gap-7 sm:flex">
-            {navLink("/", "Crates")}
-            {navLink("/inventory", "Inventory")}
+            {navLink("/marketplace", "Marketplace")}
+            {navLink("/boxes", "Boxes")}
+            <Link
+              href="/collection"
+              className={`flex items-center gap-1.5 text-[13px] font-medium tracking-wide uppercase transition-colors ${
+                pathname === "/collection" ? "text-foreground" : "text-muted hover:text-foreground"
+              }`}
+            >
+              Collection
+              {hasHydrated && inventoryCount > 0 && (
+                <span className="flex h-4 min-w-4 items-center justify-center rounded-full bg-cream px-1 text-[10px] font-bold normal-case text-background">
+                  {inventoryCount}
+                </span>
+              )}
+            </Link>
           </nav>
         </div>
 
@@ -66,11 +79,10 @@ export function Navbar() {
           </div>
 
           <Link
-            href="/inventory"
-            className="relative flex h-9 items-center gap-1.5 rounded-full border border-border-soft px-3.5 text-[13px] font-medium text-foreground transition-colors hover:bg-surface"
+            href="/collection"
+            className="relative flex h-9 items-center gap-1.5 rounded-full border border-border-soft px-3.5 text-[13px] font-medium text-foreground transition-colors hover:bg-surface sm:hidden"
           >
-            <span className="hidden sm:inline">Inventory</span>
-            <svg width="15" height="15" viewBox="0 0 16 16" fill="none" className="sm:hidden" aria-hidden="true">
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <path d="M2 5.5L8 2l6 3.5v5L8 14l-6-3.5z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
             </svg>
             {hasHydrated && inventoryCount > 0 && (

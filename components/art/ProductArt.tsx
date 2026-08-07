@@ -1,10 +1,10 @@
 "use client";
 
 import { useId } from "react";
-import { Brand, ProductSubtype } from "@/lib/types";
+import { Brand, RenderShape } from "@/lib/types";
 
 interface ProductArtProps {
-  subtype: ProductSubtype;
+  renderShape: RenderShape;
   brand: Brand;
   flavorOrEdition: string;
   className?: string;
@@ -232,7 +232,7 @@ function LabelPlate({
   );
 }
 
-export function ProductArt({ subtype, brand, flavorOrEdition, className }: ProductArtProps) {
+export function ProductArt({ renderShape, brand, flavorOrEdition, className }: ProductArtProps) {
   const ctx = useCtx(brand, flavorOrEdition);
 
   return (
@@ -241,21 +241,21 @@ export function ProductArt({ subtype, brand, flavorOrEdition, className }: Produ
       <ellipse cx="100" cy="228" rx="66" ry="16" fill={`url(#${ctx.glowId})`} />
       <ellipse cx="100" cy="234" rx="42" ry="8" fill="#000" opacity="0.4" />
 
-      {subtype === "stick" && <VapeStick ctx={ctx} />}
-      {subtype === "cloud" && <VapeCloud ctx={ctx} />}
-      {subtype === "pod-system" && <VapePodSystem ctx={ctx} />}
-      {subtype === "reserve-device" && <VapeReserve ctx={ctx} />}
-      {subtype === "soda" && <BottleSoda ctx={ctx} />}
-      {subtype === "nectar" && <BottleNectar ctx={ctx} />}
-      {subtype === "cordial" && <BottleCordial ctx={ctx} />}
-      {subtype === "tea-sachet" && <HerbalSachet ctx={ctx} />}
-      {subtype === "blend-tin" && <HerbalTin ctx={ctx} />}
-      {subtype === "reserve-canister" && <HerbalCanister ctx={ctx} />}
-      {subtype === "energy-shot" && <ConvEnergyShot ctx={ctx} />}
-      {subtype === "snack" && <ConvSnack ctx={ctx} />}
-      {subtype === "lighter" && <ConvLighter ctx={ctx} />}
-      {subtype === "grinder" && <ClcGrinder ctx={ctx} />}
-      {subtype === "display-case" && <ClcDisplayCase ctx={ctx} />}
+      {renderShape === "vape-stick" && <VapeStick ctx={ctx} />}
+      {renderShape === "vape-cloud" && <VapeCloud ctx={ctx} />}
+      {renderShape === "pod-system" && <VapePodSystem ctx={ctx} />}
+      {renderShape === "reserve-device" && <VapeReserve ctx={ctx} />}
+      {renderShape === "can" && <BottleSoda ctx={ctx} />}
+      {renderShape === "bottle-round" && <BottleNectar ctx={ctx} />}
+      {renderShape === "bottle-tall" && <BottleCordial ctx={ctx} />}
+      {renderShape === "sachet" && <HerbalSachet ctx={ctx} />}
+      {renderShape === "tin" && <HerbalTin ctx={ctx} />}
+      {renderShape === "canister" && <HerbalCanister ctx={ctx} />}
+      {renderShape === "shot-bottle" && <ConvEnergyShot ctx={ctx} />}
+      {renderShape === "pouch" && <ConvSnack ctx={ctx} />}
+      {renderShape === "lighter" && <ConvLighter ctx={ctx} />}
+      {renderShape === "grinder" && <ClcGrinder ctx={ctx} />}
+      {renderShape === "display-case" && <ClcDisplayCase ctx={ctx} />}
     </svg>
   );
 }
