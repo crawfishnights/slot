@@ -135,3 +135,32 @@ body {
 .animate-rise-in {
   animation: rise-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
+
+/* Foil sweep: a single diagonal light band that crosses standout cards on
+   hover. Card must set position:relative and overflow:hidden. */
+.foil-sweep::before {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background: linear-gradient(
+    115deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.16) 48%,
+    rgba(255, 255, 255, 0.05) 52%,
+    transparent 60%
+  );
+  transform: translateX(-60%);
+  transition: transform 0.7s ease;
+  pointer-events: none;
+}
+.foil-sweep:hover::before {
+  transform: translateX(60%);
+}
+
+@keyframes count-up-flash {
+  0% { background-color: rgba(139, 185, 138, 0.28); }
+  100% { background-color: transparent; }
+}
+.flash-positive {
+  animation: count-up-flash 0.9s ease-out;
+}

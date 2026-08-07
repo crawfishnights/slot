@@ -31,6 +31,7 @@ interface StoreState {
   keepPull: (pullUid: string) => void;
   sellPull: (pullUid: string) => void;
   sellInventoryItem: (uid: string) => void;
+  sellInventoryItems: (uids: string[]) => void;
   resetAccount: () => void;
 }
 
@@ -96,6 +97,17 @@ export const useStore = create<StoreState>()(
         set((s) => ({
           credits: s.credits + inv.item.buybackValue,
           inventory: s.inventory.filter((i) => i.uid !== invUid),
+        }));
+      },
+
+      sellInventoryItems: (uids) => {
+        const uidSet = new Set(uids);
+        const sold = get().inventory.filter((i) => uidSet.has(i.uid));
+        if (sold.length === 0) return;
+        const total = sold.reduce((sum, i) => sum + i.item.buybackValue, 0);
+        set((s) => ({
+          credits: s.credits + total,
+          inventory: s.inventory.filter((i) => !uidSet.has(i.uid)),
         }));
       },
 

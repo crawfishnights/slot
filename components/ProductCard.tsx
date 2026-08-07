@@ -13,16 +13,19 @@ interface ProductCardProps {
   crateName?: string;
   showOdds?: boolean;
   footer?: ReactNode;
+  quantity?: number;
 }
 
-export function ProductCard({ item, crateName, showOdds, footer }: ProductCardProps) {
+export function ProductCard({ item, crateName, showOdds, footer, quantity }: ProductCardProps) {
   const brand = getBrand(item.brandId);
   const isStandout = item.chaseTier === "headliner" || item.chaseTier === "major_chase";
   const isHeadliner = item.chaseTier === "headliner";
 
   return (
     <div
-      className="group relative flex flex-col overflow-hidden rounded-2xl border bg-surface transition-colors"
+      className={`group relative flex flex-col overflow-hidden rounded-2xl border bg-surface transition-all duration-200 hover:-translate-y-0.5 ${
+        isStandout ? "foil-sweep" : ""
+      }`}
       style={{
         borderColor: isHeadliner ? "rgba(244,201,93,0.4)" : isStandout ? "rgba(226,73,44,0.28)" : "var(--border-soft)",
       }}
@@ -51,6 +54,11 @@ export function ProductCard({ item, crateName, showOdds, footer }: ProductCardPr
         {showOdds && (
           <span className="absolute right-2 top-2 rounded-full bg-black/55 px-2 py-0.5 text-[10px] font-semibold text-cream backdrop-blur">
             {item.odds}%
+          </span>
+        )}
+        {quantity && quantity > 1 && (
+          <span className="absolute bottom-2 right-2 flex h-5 min-w-5 items-center justify-center rounded-md border border-border bg-black/70 px-1 text-[11px] font-bold text-cream backdrop-blur">
+            ×{quantity}
           </span>
         )}
       </div>
