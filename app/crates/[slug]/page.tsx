@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { CRATES, getCrateBySlug } from "@/lib/data/crates";
-import { CrateOpeningView } from "@/components/CrateOpeningView";
+import { CrateDetailView } from "@/components/CrateDetailView";
 
 export function generateStaticParams() {
   return CRATES.map((c) => ({ slug: c.slug }));
@@ -17,7 +17,7 @@ export async function generateMetadata({
   if (!crate) return {};
   return {
     title: `${crate.name} — Slotcase`,
-    description: crate.tagline,
+    description: crate.shortDescription,
   };
 }
 
@@ -30,5 +30,5 @@ export default async function CratePage({
   const crate = getCrateBySlug(slug);
   if (!crate) notFound();
 
-  return <CrateOpeningView crate={crate} />;
+  return <CrateDetailView crate={crate} />;
 }

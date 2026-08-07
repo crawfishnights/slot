@@ -1,25 +1,27 @@
 import type { Metadata } from "next";
-import { Sora, Plus_Jakarta_Sans } from "next/font/google";
+import { Fraunces, Inter } from "next/font/google";
 import "./globals.css";
 import { StoreHydration } from "@/components/StoreHydration";
 import { Navbar } from "@/components/Navbar";
 
-const display = Sora({
+const display = Fraunces({
   variable: "--font-display",
   subsets: ["latin"],
-  weight: ["600", "700", "800"],
+  weight: "variable",
+  style: ["normal", "italic"],
+  axes: ["opsz", "SOFT", "WONK"],
 });
 
-const body = Plus_Jakarta_Sans({
+const body = Inter({
   variable: "--font-body",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
-  title: "Slotcase — Crate Opening Marketplace",
+  title: "Slotcase — Collectible Crate Marketplace",
   description:
-    "Open themed crates, watch the roulette land, and keep or sell your fictional pulls for credits.",
+    "Three handcrafted crates, fictional brands with real personality. Open one, watch it land, keep it or sell it back.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
