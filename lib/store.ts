@@ -27,6 +27,7 @@ interface StoreState {
   hasHydrated: boolean;
   setHasHydrated: (v: boolean) => void;
   spend: (amount: number) => boolean;
+  award: (amount: number) => void;
   recordPull: (item: Item, crateSlug: string, crateName: string) => string;
   keepPull: (pullUid: string) => void;
   sellPull: (pullUid: string) => void;
@@ -56,6 +57,8 @@ export const useStore = create<StoreState>()(
         set({ credits: credits - amount });
         return true;
       },
+
+      award: (amount) => set((s) => ({ credits: s.credits + amount })),
 
       recordPull: (item, crateSlug, crateName) => {
         const pullUid = uid();

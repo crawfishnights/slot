@@ -46,6 +46,7 @@ export function Navbar() {
           </Link>
           <nav className="hidden items-center gap-7 sm:flex">
             {navLink("/", "Crates")}
+            {navLink("/slots", "Slots")}
             {navLink("/inventory", "Inventory")}
           </nav>
         </div>
